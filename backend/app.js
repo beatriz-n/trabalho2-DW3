@@ -5,7 +5,7 @@ require('dotenv').config();
 const router = require('./routes/routes');
 
 const app = express();
-const port = 23000;
+const port = 40000;
 
 app.use(bodyParser.urlencoded({ extended: false, }));
 app.use(express.json());
