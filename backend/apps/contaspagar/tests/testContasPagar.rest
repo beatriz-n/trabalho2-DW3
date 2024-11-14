@@ -1,0 +1,67 @@
+### Necessário para pegar o token
+### Post
+# @name loginAutenticado
+POST http://localhost:40000/Login HTTP/1.1
+content-type: application/json
+
+{    
+    "UserName": "admin",
+    "Password": "admin"
+}
+### Seta o token
+@accessToken = {{loginAutenticado.response.body.$.token}}
+@username = {{loginAutenticado.response.body.$.username}}
+
+### teste de inserção
+POST http://localhost:40000/insertContasPagar HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "id": 0,
+    "descricao": "Conta de luz",
+    "data_vencimento": "2024-12-10",
+    "valor": 150.75,
+    "removido": false
+}
+
+### teste de buscar todos os registros
+GET http://localhost:40000/getAllContasPagar HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+}
+
+### teste de buscar contas por ID
+POST http://localhost:40000/getContasPagarByID HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "id": 1
+}
+
+### teste de atualização de aluno
+POST http://localhost:40000/updateContasPagar HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "id": 1,
+    "descricao": "Conta de luz atualizada",
+    "data_vencimento": "2024-12-15",
+    "valor": 160.50,
+    "removido": false
+}
+
+
+### teste de atualização de aluno
+POST http://localhost:40000/deleteContasPagar HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "id": 1  
+}
+
