@@ -12,7 +12,6 @@ function authenticationMiddleware(req, res, next) {
   next();
 };
 
-/* GET home page. */
 router.get('/', authenticationMiddleware, function (req, res, next) {
   userName = req.session.userName;    
   parametros = { title: 'Home', Usuario: userName };
@@ -21,13 +20,10 @@ router.get('/', authenticationMiddleware, function (req, res, next) {
 });
 
 
-/* GET login page. */
 router.get('/Login', loginApp.Login);
 
-/* POST login page. */
 router.post('/Login', loginApp.Login);
 
-/* GET logout page. */
 router.get('/Logout', loginApp.Logout);
 
 module.exports = router;
