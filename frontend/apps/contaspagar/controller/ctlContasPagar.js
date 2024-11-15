@@ -48,8 +48,7 @@ const insertContasPagar = async (req, res) =>
     if (req.method == "GET") {
       const token = req.session.token;
 
-      const cursos = await axios.get(
-        process.env.SERVIDOR_DW3Back + "/GetAllCursos", {
+      const contaspagar = await axios.get(process.env.SERVIDOR_DW3Back + "/getAllContasPagar", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`
@@ -60,7 +59,7 @@ const insertContasPagar = async (req, res) =>
         title: "Cadastro de contaspagar",
         data: null,
         erro: null, 
-        curso: cursos.data.registro,
+        curso: contaspagar.data.registro,
         userName: null,
       });
 
@@ -96,20 +95,18 @@ const insertContasPagar = async (req, res) =>
     }
   })();
 
-const ViewContasPagar = async (req, res) =>
+const viewContasPagar = async (req, res) =>
   (async () => {
-    const userName = req.session.userName;
     const token = req.session.token;
+    const userName = req.session.userName;
     try {
       if (req.method == "GET") {
         const id = req.params.id;
         oper = req.params.oper;
         parseInt(id);
-
-        response = await axios.post(
-          process.env.SERVIDOR_DW3Back + "/getAlunoByID",
+        response = await axios.post(process.env.SERVIDOR_DW3Back + "/getContasPagarByID",
           {
-            alunoid: id,
+            id: id,
           },
           {
             headers: {
@@ -119,32 +116,31 @@ const ViewContasPagar = async (req, res) =>
           }
         );
         if (response.data.status == "ok") {
-          const cursos = await axios.get(
-            process.env.SERVIDOR_DW3Back + "/GetAllCursos", {
+          const contaspagar = await axios.get(process.env.SERVIDOR_DW3Back + "/getAllContasPagar", {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`
             }
           });
 
-          response.data.registro[0].datanascimento = moment(response.data.registro[0].datanascimento).format(
+          response.data.registro[0].data_vencimento = moment(response.data.registro[0].data_vencimento).format(
             "YYYY-MM-DD"
           );
 
           res.render("contaspagar/view/vwFRUDrContasPagar.njk", {
-            title: "Visualização de contaspagar",
+            title: "Visualização de Contas a Pagar",
             data: response.data.registro[0],
             disabled: true,
-            curso: cursos.data.registro,
+            curso: contaspagar.data.registro,
             userName: userName,
           });
         } else {
-          console.log("[ctlContasPagar|ViewContasPagar] ID de aluno não localizado!");
+          console.log("[ctlContasPagar|viewContasPagar] ID de contaspagar não localizado!");
         }
 
       }
     } catch (erro) {
-      res.json({ status: "[ctlContasPagar.js|ViewContasPagar] Aluno não localizado!" });
+      res.json({ status: "[ctlContasPagar.js|viewContasPagar] ContasPagar não localizado!" });
       console.log(
         "[ctlContasPagar.js|viewContasPagar] Try Catch: Erro não identificado",
         erro
@@ -152,7 +148,7 @@ const ViewContasPagar = async (req, res) =>
     }
   })();
 
-const UpdateAluno = async (req, res) =>
+const updateContasPagar = async (req, res) =>
   (async () => {
     const userName = req.session.userName;
     const token = req.session.token;
@@ -160,11 +156,10 @@ const UpdateAluno = async (req, res) =>
       if (req.method == "GET") {
         const id = req.params.id;
         parseInt(id);
-
         response = await axios.post(
-          process.env.SERVIDOR_DW3Back + "/getAlunoByID",
+          process.env.SERVIDOR_DW3Back + "/getContasPagarByID",
           {
-            alunoid: id,
+            id: id,
           },
           {
             headers: {
@@ -174,27 +169,27 @@ const UpdateAluno = async (req, res) =>
           }
         );
         if (response.data.status == "ok") {
-          const cursos = await axios.get(
-            process.env.SERVIDOR_DW3Back + "/GetAllCursos", {
+          const contaspagar = await axios.get(
+            process.env.SERVIDOR_DW3Back + "/getAllContasPagar", {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`
             }
           });
 
-          response.data.registro[0].datanascimento = moment(response.data.registro[0].datanascimento).format(
+          response.data.registro[0].data_vencimento = moment(response.data.registro[0].data_vencimento).format(
             "YYYY-MM-DD"
           );
 
           res.render("contaspagar/view/vwFRUDrContasPagar.njk", {
-            title: "Atualização de dados de contaspagar",
+            title: "Atualização de dados de Contas a Pagar",
             data: response.data.registro[0],
             disabled: false,
-            curso: cursos.data.registro,
+            curso: contaspagar.data.registro,
             userName: userName,
           });
         } else {
-          console.log("[ctlContasPagar|UpdateAluno] Dados não localizados");
+          console.log("[ctlContasPagar|UpdateContasPagar] Dados não localizados");
         }
       } else {
         const regData = req.body;
@@ -215,7 +210,7 @@ const UpdateAluno = async (req, res) =>
             erro: null,
           });
         } catch (error) {
-          console.error('[ctlContasPagar.js|UpdateAluno] Erro ao atualiza dados de contaspagar no servidor backend:', error.message);
+          console.error('[ctlContasPagar.js|UpdateContasPagar] Erro ao atualiza dados de contaspagar no servidor backend:', error.message);
           res.json({
             status: "Error",
             msg: error.message,
@@ -225,16 +220,16 @@ const UpdateAluno = async (req, res) =>
         }
       }
     } catch (erro) {
-      res.json({ status: "[ctlContasPagar.js|UpdateAluno] Aluno não localizado!" });
+      res.json({ status: "[ctlContasPagar.js|UpdateContasPagar] ContasPagar não localizado!" });
       console.log(
-        "[ctlContasPagar.js|UpdateAluno] Try Catch: Erro não identificado",
+        "[ctlContasPagar.js|UpdateContasPagar] Try Catch: Erro não identificado",
         erro
       );
     }
 
   })();
 
-const DeleteAluno = async (req, res) =>
+const deleteContasPagar = async (req, res) =>
   (async () => {
     const regData = req.body;
     const token = req.session.token;
@@ -255,7 +250,7 @@ const DeleteAluno = async (req, res) =>
         erro: null,
       });
     } catch (error) {
-      console.error('[ctlContasPagar.js|DeleteAluno] Erro ao deletar dados de contaspagar no servidor backend:', error.message);
+      console.error('[ctlContasPagar.js|DeleteContasPagar] Erro ao deletar dados de contaspagar no servidor backend:', error.message);
       res.json({
         status: "Error",
         msg: error.message,
@@ -268,7 +263,7 @@ const DeleteAluno = async (req, res) =>
 module.exports = {
   manutContasPagar,
   insertContasPagar,
-  ViewContasPagar,
-  UpdateAluno,
-  DeleteAluno
+  viewContasPagar,
+  updateContasPagar,
+  deleteContasPagar
 };

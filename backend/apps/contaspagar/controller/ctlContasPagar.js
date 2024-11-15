@@ -9,6 +9,7 @@ const getAllContasPagar = (req, res) =>
 const getContasPagarByID = (req, res) =>
     (async () => {
         const contaID = parseInt(req.body.id);
+        console.log("contaID", contaID);
         let registro = await mdlContasPagar.getContasPagarByID(contaID);
         res.json({ status: "ok", "registro": registro });
     })();

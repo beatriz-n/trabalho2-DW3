@@ -15,17 +15,14 @@ function authenticationMiddleware(req, res, next) {
     next();
 }; 
   
-/* GET métodos */
-router.get('/ManutContasPagar', authenticationMiddleware, contaspagarApp.manutContasPagar);
-router.get('/InsertContasPagar', authenticationMiddleware, contaspagarApp.insertContasPagar);
-router.get('/ViewContasPagar/:id', authenticationMiddleware, contaspagarApp.ViewContasPagar);
-router.get('/UpdateContasPagar/:id', authenticationMiddleware, contaspagarApp.UpdateAluno);
+router.get('/manutContasPagar', authenticationMiddleware, contaspagarApp.manutContasPagar);
+router.get('/insertContasPagar', authenticationMiddleware, contaspagarApp.insertContasPagar);
+router.get('/viewContasPagar/:id', authenticationMiddleware, contaspagarApp.viewContasPagar);
+router.get('/updateContasPagar/:id', authenticationMiddleware, contaspagarApp.updateContasPagar);
 
-/* POST métodos */
-router.post('/InsertContasPagar', authenticationMiddleware, contaspagarApp.insertContasPagar);
-router.post('/UpdateContasPagar', authenticationMiddleware, contaspagarApp.UpdateAluno);
-router.post('/DeleteContasPagar', authenticationMiddleware, contaspagarApp.DeleteAluno);
-// router.post('/viewContasPagar', authenticationMiddleware, contaspagarApp.viewContasPagar);
+router.post('/insertContasPagar', authenticationMiddleware, contaspagarApp.insertContasPagar);
+router.post('/updateContasPagar', authenticationMiddleware, contaspagarApp.updateContasPagar);
+router.post('/deleteContasPagar', authenticationMiddleware, contaspagarApp.deleteContasPagar);
 
 
 module.exports = router;

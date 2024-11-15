@@ -39,7 +39,7 @@ content-type: application/json
 Authorization: Bearer {{accessToken}}
 
 {    
-    "id": 1
+    "id": 4
 }
 
 ### teste de atualização de aluno

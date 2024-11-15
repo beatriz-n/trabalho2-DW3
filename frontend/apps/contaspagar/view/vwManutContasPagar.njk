@@ -8,15 +8,11 @@
   <div class="row">
     <div class="col-xl-12">
 
-      <div class="card-header">
-        ContasPagar
-      </div>
-
       <div class="card-body">
         <div class="">
           <div style="margin-bottom: 15px;">
             <a href="/contaspagar/insertContasPagar" class="btn btn-primary">
-              Inserir novo aluno
+              Inserir novo contaspagar
             </a>
           </div>
 
@@ -24,33 +20,28 @@
              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
+                  <th>Data de Vencimento</th>
+                  <th>Valor</th>
+                  <th>Descrição</th>
                   <th>Ação</th>
-                  <th>Prontuário</th>
-                  <th>Nome</th>
-                  <th>Endereço</th>
-                  <th>datanascimento</th>
-                  <th>Curso</th>
                 </tr>
               </thead>
               <tbody>
                 {% for reg in data %}
                   <tr>
+
+                  <td>{{ reg.data_vencimento }}</td>
+                    <td>{{reg.valor}}</td>
+                    <td>{{reg.descricao}}</td>
                     <td>
-                      {# Link para visualização dos dados #}
-                      <a href="/contaspagar/viewContasPagar/{{ reg.alunoid }}"  title="Visualizar">
+                      <a href="/contaspagar/viewContasPagar/{{ reg.id }}"  title="Visualizar">
                         <i class="fas fa-search"></i>
                       </a>
 
-                      {# Link para atualuzação e remoção dos dados#}
-                      <a href="/contaspagar/UpdateContasPagar/{{ reg.alunoid }}" title="Atualizar" style="margin-left: 10px;">
+                      <a href="/contaspagar/updateContasPagar/{{ reg.id }}" title="Atualizar" style="margin-left: 10px;">
                         <i class="fas fa-pencil-alt"></i>
                       </a>
                     </td>
-                    <td>{{reg.prontuario}}</td>
-                    <td>{{reg.nome}}</td>
-                    <td>{{reg.endereco}}</td>
-                    <td>{{reg.datanascimento}}</td>
-                    <td>{{reg.descricao}}</td>
                   </tr>
                 {% endfor %}
               </tbody>
@@ -67,7 +58,6 @@
 
     window.onload = function () {
       windowOnLoad();
-      //@ Caso tenha dado erro no servidor frontEnd, ele será mostrado aqui.
       const localErro = "{{erro}}";
       if (localErro != "") {
         alert("[vwContasPagar|onload]Servidor retornou o erro:" + localErro);

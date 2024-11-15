@@ -15,7 +15,7 @@ const getContasPagarByID = async (contaID) => {
       [contaID]
     )
   ).rows;
-};''
+};
 
 const insertContasPagar = async (contaREGPar) => {
   let linhasAfetadas;
