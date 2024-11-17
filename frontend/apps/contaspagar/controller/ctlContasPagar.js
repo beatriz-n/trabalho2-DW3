@@ -23,7 +23,7 @@ const manutContasPagar = async (req, res) =>
         remoteMSG = error;
       }
       res.render("contaspagar/view/vwManutContasPagar.njk", {
-        title: "Manutenção de contaspagar",
+        title: "Manutenção de Contas a Pagar",
         data: null,
         erro: remoteMSG,
         userName: userName,
@@ -36,7 +36,7 @@ const manutContasPagar = async (req, res) =>
 
 
     res.render("contaspagar/view/vwManutContasPagar.njk", {
-      title: "Manutenção de contaspagar",
+      title: "Manutenção de Contas a Pagar",
       data: resp.data.registro,
       erro: null,
       userName: userName,
@@ -56,10 +56,10 @@ const insertContasPagar = async (req, res) =>
       });
 
       return res.render("contaspagar/view/vwFCrContasPagar.njk", {
-        title: "Cadastro de contaspagar",
+        title: "Cadastro de Contas a Pagar",
         data: null,
         erro: null, 
-        curso: contaspagar.data.registro,
+        data: contaspagar.data.registro,
         userName: null,
       });
 

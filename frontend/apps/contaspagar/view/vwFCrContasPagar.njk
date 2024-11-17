@@ -32,17 +32,16 @@
         function contaspagarForm() {
           return {
             form: {
-              id: "{{ data.id }}",
-              data_vencimento: formatDate("{{ data.data_vencimento }}"),
-              valor: "{{ data.valor }}",
-              descricao: "{{ data.descricao }}",
+              valor: '',
+              descricao: '',
+              data_vencimento: '',
               deleted: false
             },
             message: '',
             messageClass: '',
-            disabled: {{ disabled }},
             async insertForm() {
               try {
+                console.log("Valor na página:", JSON.stringify(this.form))
                 const response = await fetch('/contaspagar/insertContasPagar', {
                   method: 'POST',
                   headers: {
@@ -51,13 +50,14 @@
                   body: JSON.stringify(this.form)
                 });
                 const result = await response.json();
-                if (result.status === "ok") {
-                  alert("Contas a Pagar cadastrado com sucesso");
+                console.log("Valor na response:", response);
+                console.log("Valor na result:", result);
+                if (result.status == "ok") {
+                  alert("Contas a Pagar cadastrado com suscesso");
                   this.resetForm();
                 } else {
-                  this.message = `Erro! Não foi possível cadastrar o Contas a Pagar: ${
-                    result.status
-                  }`;
+                  const errorData = result.status;
+                  this.message = `Erro! Não foi possível cadastrar o Contas a Pagar devido ao erro: ${errorData}`;
                   this.messageClass = 'alert alert-danger';
                 }
               } catch (error) {
@@ -69,13 +69,12 @@
             },
             resetForm() {
               this.form = {
-                id: '',
-                data_vencimento: '',
-                valor: '',
-                descricao: '',
-                deleted: false
+              valor: '',
+              descricao: '',
+              data_vencimento: '',
+              deleted: false
               };
-              this.message = '';
+              this.message = false;
             }
           };
         }

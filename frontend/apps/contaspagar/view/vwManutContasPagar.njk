@@ -1,43 +1,37 @@
 {% extends "templates/base.html" %}
-
 {% block content %}
-
   <ol class="breadcrumb mb-2">
-    <li class="breadcrumb-item active">{{title}}</li>
+    <li class="breadcrumb-item active">{{ title }}</li>
   </ol>
   <div class="row">
     <div class="col-xl-12">
-
       <div class="card-body">
         <div class="">
           <div style="margin-bottom: 15px;">
             <a href="/contaspagar/insertContasPagar" class="btn btn-primary">
-              Inserir novo contaspagar
+              Inserir Contas a Pagar
             </a>
           </div>
-
           <div class="table-responsive">
-             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
-                  <th>Data de Vencimento</th>
-                  <th>Valor</th>
+                  <th class="text-center">Data de Vencimento</th>
+                  <th class="text-center">Valor</th>
                   <th>Descrição</th>
-                  <th>Ação</th>
+                  <th class="text-center">Ação</th>
                 </tr>
               </thead>
               <tbody>
                 {% for reg in data %}
                   <tr>
-
-                  <td>{{ reg.data_vencimento }}</td>
-                    <td>{{reg.valor}}</td>
-                    <td>{{reg.descricao}}</td>
-                    <td>
-                      <a href="/contaspagar/viewContasPagar/{{ reg.id }}"  title="Visualizar">
+                    <td  class="text-center">{{ reg.data_vencimento | formatDate }}</td>
+                    <td class="text-center">{{ reg.valor }}</td>
+                    <td>{{ reg.descricao }}</td>
+                    <td class="text-center">
+                      <a href="/contaspagar/viewContasPagar/{{ reg.id }}" title="Visualizar">
                         <i class="fas fa-search"></i>
                       </a>
-
                       <a href="/contaspagar/updateContasPagar/{{ reg.id }}" title="Atualizar" style="margin-left: 10px;">
                         <i class="fas fa-pencil-alt"></i>
                       </a>
@@ -46,25 +40,19 @@
                 {% endfor %}
               </tbody>
             </table>
-
           </div>
-
         </div>
       </div>
     </div>
   </div>
-
   <script>
-
     window.onload = function () {
       windowOnLoad();
-      const localErro = "{{erro}}";
+      const localErro = "{{ erro }}";
       if (localErro != "") {
         alert("[vwContasPagar|onload]Servidor retornou o erro:" + localErro);
       }
-
-      new DataTable('#tabContasPagar');
+      new DataTable('#dataTable');
     };
   </script>
-
 {% endblock %}
